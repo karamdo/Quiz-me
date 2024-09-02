@@ -1,8 +1,7 @@
-# React + Vite
+# Quiz Me
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## React + tailwind project
 
-Currently, two official plugins are available:
+React game built by vite and tailwind focused on useReducer hook
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> NOTE: the website not scalable for phons yet
