@@ -58,7 +58,7 @@ export default function StartScreen({ dispatch }) {
                 <Loader />
             ) : (
                 <>
-                    <h1 className="text-6xl">Welcome to trivia quiz bitch</h1>
+                    <h1 className="text-7xl">Welcome to trivia quiz</h1>
                     <Form dispatch={formDispatch} />
                 </>
             )}

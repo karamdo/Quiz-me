@@ -5,9 +5,7 @@ export default function Options({ question, setCorrect, correct }) {
     const [option, setOption] = useState(null);
     const correct_answer = question?.correct_answer;
     const answers =
-        question.type === "boolean"
-            ? ["True", "False"]
-            : [correct_answer, ...question.incorrect_answers];
+        question.type === "boolean" ? ["True", "False"] : [correct_answer, ...question.incorrect_answers];
 
     function handleClick(e) {
         setOption(e.target.textContent);
@@ -15,7 +13,7 @@ export default function Options({ question, setCorrect, correct }) {
     }
 
     return (
-        <div className="flex flex-col gap-3 *:rounded-full w-[60%] *:py-2">
+        <div className="flex flex-col gap-3 *:rounded-full max-w-[100%] w-fit min-w-[40%]  *:py-2">
             {answers.sort().map((element, index) => {
                 return (
                     <Button
