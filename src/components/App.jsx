@@ -71,7 +71,6 @@ export default function App() {
     if (index === questionsNum) {
         dispatch({ type: "finish" });
     }
-    console.log(questions);
     return (
         <div className="bg-primary font-mono text-font min-h-screen h-full flex flex-col items-center p-2">
             {status === "ready" && <StartScreen dispatch={dispatch} />}
@@ -87,12 +86,7 @@ export default function App() {
                 />
             )}
             {status === "finish" && (
-                <Finish
-                    highestScore={highestScore}
-                    points={points}
-                    record={record}
-                    dispatch={dispatch}
-                />
+                <Finish highestScore={highestScore} points={points} record={record} dispatch={dispatch} />
             )}
         </div>
     );

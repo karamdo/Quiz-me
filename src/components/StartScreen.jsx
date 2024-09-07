@@ -24,7 +24,7 @@ function reducer(state, action) {
             return { ...state, status: "start" };
         }
         default:
-            console.log("NO ACTION");
+            throw new Error("no action found");
     }
 }
 
@@ -36,7 +36,6 @@ export default function StartScreen({ dispatch }) {
             const cat = category !== "any" ? `&category=${category}` : "";
             const diff = difficulty !== "any" ? `&difficulty=${difficulty}` : "";
             const tp = type !== "any" ? `&type=${type}` : "";
-            console.log(`https://opentdb.com/api.php?amount=${number}${cat}${diff}${tp}`);
             async function Fetch() {
                 try {
                     const res = await fetch(`https://opentdb.com/api.php?amount=${number}${cat}${diff}${tp}`);
