@@ -1,77 +1,92 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import categories from "./categories";
 import Button from "./Button";
 import Params from "./Params";
 
-const difficulty = [
+const DEFAULT_PARAMS = {
+    number: "10",
+    categories: "any",
+    difficulty: "any",
+    type: "any",
+};
+
+const difficultyOptions = [
     { id: "any", name: "ALL" },
     { id: "easy", name: "Easy" },
     { id: "medium", name: "Medium" },
     { id: "hard", name: "Hard" },
 ];
-const type = [
+
+const typeOptions = [
     { id: "any", name: "Both" },
     { id: "multiple", name: "Multiple Choices" },
     { id: "boolean", name: "True/False" },
 ];
 
 export default function Form({ dispatch }) {
-    const message = useRef(null);
-    const [params, setParams] = useState({
-        number: "10",
-        categories: "any",
-        difficulty: "any",
-        type: "any",
-    });
-    function handleSubmit(event) {
+    const messageRef = useRef(null);
+    const [params, setParams] = useState(DEFAULT_PARAMS);
+
+    useEffect(() => {
+        if (!params.number || params.number == 0) {
+            messageRef.current.focus();
+            messageRef.current.style.outline = "1px solid red";
+        }
+    }, [params.number]);
+
+    const handleSubmit = (event) => {
         event.preventDefault();
         if (!params.number || params.number == 0) {
-            message.current.focus();
-            message.current.style.outline = "1px solid red";
             return;
         }
         dispatch({
             type: "submit",
             payload: [params.number, params.categories, params.difficulty, params.type],
         });
-    }
-    function handleClear(event) {
+    };
+
+    const handleClear = (event) => {
         event.preventDefault();
-        setParams({ number: "10", categories: "any", difficulty: "any", type: "any" });
-    }
+        setParams(DEFAULT_PARAMS);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setParams((prevParams) => ({
+            ...prevParams,
+            [name]: value,
+        }));
+    };
 
     return (
         <form className="h-[60%] w-[85%] mt-12 flex flex-col gap-8 justify-between text-2xl *:flex">
             <div>
-                <label>number of questions : </label>
+                <label htmlFor="number">Number of questions:</label>
                 <input
+                    id="number"
                     autoFocus
-                    ref={message}
+                    ref={messageRef}
                     className="text-2xl text-black flex-1 rounded-lg px-2"
-                    onChange={(e) =>
-                        setParams((params) => ({
-                            ...params,
-                            number: isNaN(Number(e.target.value)) ? params.number : Number(e.target.value),
-                        }))
-                    }
+                    onChange={handleChange}
                     value={params.number}
+                    name="number"
                 />
             </div>
-            <Params setParams={setParams} params={params} paramsName="difficulty" items={difficulty}>
-                difficulty of questions :{" "}
+            <Params setParams={setParams} params={params} paramsName="difficulty" items={difficultyOptions}>
+                Difficulty of questions:
             </Params>
-            <Params paramsName="categories" setParams={setParams} params={params} items={categories}>
-                category :{" "}
+            <Params setParams={setParams} params={params} paramsName="categories" items={categories}>
+                Category:
             </Params>
-            <Params setParams={setParams} paramsName="type" params={params} items={type}>
-                type of questions :{" "}
+            <Params setParams={setParams} params={params} paramsName="type" items={typeOptions}>
+                Type of questions:
             </Params>
-            <div className="justify-between">
+            <div className="flex justify-between">
                 <Button className="hover:bg-secondary" onClick={handleClear}>
-                    clear
+                    Clear
                 </Button>
                 <Button className="hover:bg-secondary" onClick={handleSubmit}>
-                    start
+                    Start
                 </Button>
             </div>
         </form>
