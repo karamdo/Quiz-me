@@ -75,7 +75,6 @@ export default function Form({ dispatch }) {
 
     useEffect(() => {
         function submit(key) {
-            console.log(key);
             if (key.code === "Enter") handleSubmit(key);
         }
         document.addEventListener("keydown", submit);

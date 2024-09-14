@@ -25,12 +25,19 @@ export default function Main() {
         <div className="text-2xl w-[80%] flex-1">
             <Header />
             <Progress />
-            <Question setCorrect={setCorrect} question={question} dispatch={dispatch} correct={correct} />
+            <Question
+                setCorrect={setCorrect}
+                question={question}
+                dispatch={dispatch}
+                correct={correct}
+            />
             <div className="flex justify-between">
                 <Timer dispatch={dispatch} />
                 {correct && (
                     <Button
-                        className={"rounded-full text-3xl self-center hover:bg-secondary"}
+                        className={
+                            "rounded-full text-3xl self-center hover:bg-secondary"
+                        }
                         onClick={handleClick}
                     >
                         {questionsNum === index ? "finish" : "next"}
