@@ -5,7 +5,10 @@ export default function Progress({ answer }) {
     console.log(answer);
     return (
         <header className="m-5 progress">
-            <progress max={questionsNum} value={index} />
+            <progress
+                max={questionsNum}
+                value={index + Number(answer !== null)}
+            />
             <p>
                 Question <strong>{index + 1}</strong>/{questionsNum}
             </p>

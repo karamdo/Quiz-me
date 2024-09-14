@@ -24,7 +24,7 @@ export default function Main() {
     return (
         <div className="text-2xl w-[80%] flex-1">
             <Header />
-            <Progress />
+            <Progress answer={correct} />
             <Question
                 setCorrect={setCorrect}
                 question={question}
