@@ -2,7 +2,6 @@ import { useQuiz } from "../context/QuizContext";
 
 export default function Progress({ answer }) {
     const { highestScore, points, index, questionsNum } = useQuiz();
-    console.log(answer);
     return (
         <header className="m-5 progress">
             <progress
