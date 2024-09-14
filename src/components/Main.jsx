@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "./Header";
-import Question from "./question";
+import Question from "./Question";
 import Button from "./Button";
 import Timer from "./Timer";
 import Progress from "./Progress";

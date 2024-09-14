@@ -25,17 +25,25 @@ function reducer(state, action) {
                 questions: action.payload,
                 questionsNum: action.payload.length,
                 highestScore: action.payload.reduce((prev, cur) => {
-                    prev += cur.difficulty === "easy" ? 10 : cur.difficulty === "hard" ? 30 : 20;
+                    prev +=
+                        cur.difficulty === "easy"
+                            ? 10
+                            : cur.difficulty === "hard"
+                            ? 30
+                            : 20;
                     return prev;
                 }, 0),
                 secondsRemaining: SEC_PER_QUESTION * action.payload.length,
             };
-        case "answer":
-            return {
-                ...state,
-                index: state.index + 1,
-                points: state.points + action.payload,
-            };
+        case "answer": {
+            if (state.index + 1 !== state.questionsNum)
+                return {
+                    ...state,
+                    index: state.index + 1,
+                    points: state.points + action.payload,
+                };
+        }
+        // eslint-disable-next-line no-fallthrough
         case "finish":
             return {
                 ...state,
@@ -58,12 +66,23 @@ function reducer(state, action) {
                 ...state,
                 secondsRemaining: state.secondsRemaining - 1,
             };
+        default:
+            throw new Error("Unknown action");
     }
 }
 
 function QuizProvider({ children }) {
     const [
-        { questions, status, questionsNum, index, highestScore, secondsRemaining, points, record },
+        {
+            questions,
+            status,
+            questionsNum,
+            index,
+            highestScore,
+            secondsRemaining,
+            points,
+            record,
+        },
         dispatch,
     ] = useReducer(reducer, initialState);
 
@@ -88,7 +107,8 @@ function QuizProvider({ children }) {
 
 function useQuiz() {
     const context = useContext(QuizContext);
-    if (context === undefined) throw new Error("useQuiz used outside of QuizProvider");
+    if (context === undefined)
+        throw new Error("useQuiz used outside of QuizProvider");
     return context;
 }
 
