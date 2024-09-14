@@ -1,6 +1,8 @@
+import { useQuiz } from "../context/QuizContext";
 import Button from "./Button";
 
-export default function Header({ dispatch }) {
+export default function Header() {
+    const { dispatch } = useQuiz();
     function handleClick() {
         dispatch({ type: "reset" });
     }

@@ -1,19 +1,14 @@
 import { useState } from "react";
 import Header from "./Header";
-import Question from "./question";
+import Question from "./Question";
 import Button from "./Button";
 import Timer from "./Timer";
 import Progress from "./Progress";
+import { useQuiz } from "../context/QuizContext";
 
-export default function Main({
-    dispatch,
-    question,
-    index,
-    questionsNum,
-    highestScore,
-    points,
-    secondsRemaining,
-}) {
+export default function Main() {
+    const { dispatch, questionsNum, index, questions } = useQuiz();
+    const question = questions[index];
     const [correct, setCorrect] = useState(null);
     let point = 0;
     if (correct === "true") {
@@ -28,26 +23,21 @@ export default function Main({
     }
     return (
         <div className="text-2xl w-[80%] flex-1">
-            <Header dispatch={dispatch} />
-            <Progress
-                highestScore={highestScore}
-                points={point + points}
-                index={index}
-                answer={correct}
-                questionsNum={questionsNum}
-            />
+            <Header />
+            <Progress answer={correct} />
             <Question
                 setCorrect={setCorrect}
                 question={question}
                 dispatch={dispatch}
-                index={index}
                 correct={correct}
             />
             <div className="flex justify-between">
-                <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
+                <Timer dispatch={dispatch} />
                 {correct && (
                     <Button
-                        className={"rounded-full text-3xl self-center hover:bg-secondary"}
+                        className={
+                            "rounded-full text-3xl self-center hover:bg-secondary"
+                        }
                         onClick={handleClick}
                     >
                         {questionsNum === index ? "finish" : "next"}
